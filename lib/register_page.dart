@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'components/text_field.dart';
+import 'package:latihan_11pplg2/components/custom_button.dart';
+import 'package:latihan_11pplg2/components/custom_textfield.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -35,7 +36,6 @@ class _RegisterPageState extends State<RegisterPage> {
       return;
     }
 
-    // Lanjutkan logika jika valid
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
         content: Text("✅ Registrasi berhasil!"),
@@ -69,71 +69,117 @@ class _RegisterPageState extends State<RegisterPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(height: 32),
               const Text(
                 'Register',
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
-              const SizedBox(height: 16),
-              InputField(label: "Nama Lengkap", controller: nameController),
-              InputField(label: "Email", controller: emailController),
-              InputField(
-                label: "Password",
-                controller: passwordController,
-                obscureText: true,
-              ),
-              InputField(
-                label: "Konfirmasi Password",
-                controller: confirmPasswordController,
-                obscureText: true,
-              ),
 
-              // Gender Dropdown
-              const SizedBox(height: 16),
-              DropdownButtonFormField<String>(
-                value: selectedGender,
-                decoration: InputDecoration(
-                  labelText: "Jenis Kelamin",
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                ),
-                items: ["Laki-laki", "Perempuan"]
-                    .map(
-                      (gender) =>
-                          DropdownMenuItem(value: gender, child: Text(gender)),
-                    )
-                    .toList(),
-                onChanged: (value) => setState(() {
-                  selectedGender = value;
-                }),
-              ),
-
-              // Tanggal Lahir
-              const SizedBox(height: 16),
-              TextField(
-                controller: dateController,
-                readOnly: true,
-                onTap: _selectDate,
-                decoration: InputDecoration(
-                  labelText: "Tanggal Lahir",
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
+              // Nama Lengkap
+              Container(
+                width: double.infinity,
+                margin: const EdgeInsets.only(top: 24),
+                child: CustomTextField(
+                  label: 'Nama Lengkap',
+                  controller: nameController,
+                  isPassword: false,
+                  isNumber: false,
+                  keyboardType: TextInputType.text,
+                  labelColor: Colors.black,
                 ),
               ),
 
-              const SizedBox(height: 24),
-              ElevatedButton(
-                onPressed: () => register(context),
-                style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(vertical: 14),
-                  minimumSize: const Size.fromHeight(50),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
+              // Email
+              Container(
+                width: double.infinity,
+                margin: const EdgeInsets.only(top: 24),
+                child: CustomTextField(
+                  label: 'Email',
+                  controller: emailController,
+                  isPassword: false,
+                  isNumber: false,
+                  keyboardType: TextInputType.emailAddress,
+                  labelColor: Colors.black,
+                ),
+              ),
+
+              // Password
+              Container(
+                width: double.infinity,
+                margin: const EdgeInsets.only(top: 24),
+                child: CustomTextField(
+                  label: 'Password',
+                  controller: passwordController,
+                  isPassword: true,
+                  isNumber: false,
+                  keyboardType: TextInputType.visiblePassword,
+                  labelColor: Colors.black,
+                ),
+              ),
+
+              // Konfirmasi Password
+              Container(
+                width: double.infinity,
+                margin: const EdgeInsets.only(top: 24),
+                child: CustomTextField(
+                  label: 'Confirm Password',
+                  controller: confirmPasswordController,
+                  isPassword: true,
+                  isNumber: false,
+                  keyboardType: TextInputType.visiblePassword,
+                  labelColor: Colors.black,
+                ),
+              ),
+
+              // Gender
+              Container(
+                width: double.infinity,
+                margin: const EdgeInsets.only(top: 24),
+                child: DropdownButtonFormField<String>(
+                  value: selectedGender,
+                  decoration: InputDecoration(
+                    labelText: "Jenis Kelamin",
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
+                  items: ["Laki-laki", "Perempuan"]
+                      .map(
+                        (gender) => DropdownMenuItem(
+                          value: gender,
+                          child: Text(gender),
+                        ),
+                      )
+                      .toList(),
+                  onChanged: (value) => setState(() {
+                    selectedGender = value;
+                  }),
+                ),
+              ),
+
+              Container(
+                width: double.infinity,
+                margin: const EdgeInsets.only(top: 24),
+                child: TextField(
+                  controller: dateController,
+                  readOnly: true,
+                  onTap: _selectDate,
+                  decoration: InputDecoration(
+                    labelText: "Tanggal Lahir",
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
                   ),
                 ),
-                child: const Text("Register", style: TextStyle(fontSize: 16)),
+              ),
+
+              Container(
+                width: double.infinity,
+                margin: const EdgeInsets.only(top: 24),
+                child: CustomButton(
+                  myText: "Daftar",
+                  myTextColor: Colors.white,
+                  onPressed: () => register(context),
+                ),
               ),
             ],
           ),
